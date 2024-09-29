@@ -1,15 +1,26 @@
 package com.restapi.proyectointegrador.model;
 
-public class Reserva {
-    private String id;
-    private String idUsuario;
-    private String fecha;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-    // Constructor
-    public Reserva(String id, String idUsuario, String fecha) {
-        this.id = id;
+import java.time.LocalDateTime;
+
+@Document(collection = "reservas")
+public class Reserva {
+    @Id
+    private String id; // MongoDB generará este id automáticamente
+    private String idUsuario;
+    private LocalDateTime fecha;
+
+    // Constructor por defecto
+    public Reserva() {
+        this.fecha = LocalDateTime.now(); // Inicializa la fecha al momento de crear la instancia
+    }
+
+    // Constructor que solo recibe idUsuario
+    public Reserva(String idUsuario) {
         this.idUsuario = idUsuario;
-        this.fecha = fecha;
+        this.fecha = LocalDateTime.now(); // Inicializa la fecha al momento de crear la instancia
     }
 
     // Getters y Setters
@@ -29,11 +40,12 @@ public class Reserva {
         this.idUsuario = idUsuario;
     }
 
-    public String getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    // Se puede omitir el método setFecha() si no deseas modificar la fecha después de la creación
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha; // O puedes mantener la lógica si deseas permitir que la fecha se cambie manualmente
     }
 }

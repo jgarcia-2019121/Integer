@@ -1,5 +1,8 @@
 package com.restapi.proyectointegrador.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "usuarios")
 public class Usuario {
     private String id;
     private String nombre;
