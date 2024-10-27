@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.restapi</groupId>
-	<artifactId>proyectointegrador</artifactId>
+	<artifactId>integer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>proyectointegrador</name>
 	<description>Demo project for Spring Boot</description>
