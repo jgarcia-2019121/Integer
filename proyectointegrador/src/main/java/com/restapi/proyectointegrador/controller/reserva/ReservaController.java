@@ -22,6 +22,7 @@ public class ReservaController {
     @GetMapping("/{id}")
     public Optional<Reserva> getReserva(@PathVariable String id) {
         return reservaService.getReservaById(id);
+
     }
 
     @GetMapping
