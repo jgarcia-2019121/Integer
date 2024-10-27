@@ -23,6 +23,16 @@ public class Reserva {
         this.fecha = LocalDateTime.now(); // Inicializa la fecha al momento de crear la instancia
     }
 
+    public Reserva(String id, String idUsuario, LocalDateTime fecha) {
+        this.id = id;
+        this.idUsuario = idUsuario;
+        this.fecha = fecha;
+    }
+
+    public Reserva(String number, String usuario1) {
+
+    }
+
     // Getters y Setters
     public String getId() {
         return id;

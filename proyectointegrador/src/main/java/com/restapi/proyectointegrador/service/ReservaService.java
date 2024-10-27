@@ -26,6 +26,7 @@ public class ReservaService {
         return reservaRepository.save(reserva);
     }
 
+
     public Reserva actualizarReserva(String id, Reserva reserva) {
         Optional<Reserva> reservaExistente = reservaRepository.findById(id);
         if (reservaExistente.isPresent()) {
