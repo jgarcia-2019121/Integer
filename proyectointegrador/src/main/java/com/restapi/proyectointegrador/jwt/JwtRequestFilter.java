@@ -27,7 +27,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     public JwtRequestFilter(@Value("${security.jwt.secret.key}") String secret) {
         this.secret = secret;
     }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -35,13 +34,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (request.getRequestURI().equals("/api/v1/auth")
                 || request.getRequestURI().equals("/health")
                 || request.getRequestURI().startsWith("/swagger")
-                || request.getRequestURI().startsWith("/v3/api-docs")
-            //|| request.getRequestURI().equals("/api/v1/user")
-        ){
+                || request.getRequestURI().startsWith("/v3/api-docs")) {
             filterChain.doFilter(request, response);
-        } else if (HttpMethod.OPTIONS.name().equals(request.getMethod())){
-            System.out.println("Primera comparacion: " + HttpMethod.OPTIONS.name());
-            System.out.println("Segunda comparacion: " + request.getMethod());
+        } else if (HttpMethod.OPTIONS.name().equals(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
             filterChain.doFilter(request, response);
         } else {
@@ -54,15 +49,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 String token = authHeader.substring(7);
 
-                // Crear el parser
-                JwtParser parser = Jwts.parserBuilder()
-                        .setSigningKey(secret)
-                        .build();
+                // Aquí puedes usar el método de JwtUtil para validar el token
+                Claims claimsBody = JwtUtil.extractAllClaims(token); // Asumiendo que tienes una instancia de JwtUtil
 
-                // Parsear el token
-                Jws<Claims> claims = parser.parseClaimsJws(token);
-
-                Claims claimsBody = claims.getBody();
                 String subject = claimsBody.getSubject();
                 List<String> roles = claimsBody.get("ada_roles", ArrayList.class);
 
@@ -84,8 +73,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token expired or malformed");
             }
 
-
             filterChain.doFilter(request, response);
         }
     }
+
 }
